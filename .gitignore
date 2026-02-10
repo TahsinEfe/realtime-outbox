@@ -1,0 +1,46 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# IDE/editor
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Test/output
+TestResults/
+*.trx
+*.log
+logs/
+
+# Runtime/local files
+*.pid
+*.seed
+*.tmp
+*.cache
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Sensitive appsettings/local configs
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/appsettings.*.local.json
+**/appsettings.secrets.json
+**/appsettings.*.secrets.json
+
+# If you keep real credentials in appsettings.json, ignore per-service copies
+src/RealtimeOutbox.ChatService/appsettings.json
+src/RealtimeOutbox.OutboxWorker/appsettings.json
+
+# Keep safe templates
+!**/appsettings.sample.json
+!**/appsettings.template.json
+!**/appsettings.example.json

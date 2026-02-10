@@ -1,0 +1,6 @@
+@RealtimeOutbox.RealtimeGateway_HostAddress = http://localhost:5214
+
+GET {{RealtimeOutbox.RealtimeGateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

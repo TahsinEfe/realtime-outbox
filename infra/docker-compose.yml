@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: realtime-outbox_postgres
+    environment:
+      POSTGRES_USER: realtime-outbox
+      POSTGRES_PASSWORD: realtime-outbox_pass
+      POSTGRES_DB: realtime-outbox_chat
+    ports:
+      - "5433:5432"
+    volumes:
+      - realtime-outbox_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U realtime-outbox -d realtime-outbox_chat"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: realtime-outbox_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: realtime-outbox
+      RABBITMQ_DEFAULT_PASS: realtime-outbox_pass
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  realtime-outbox_pgdata:

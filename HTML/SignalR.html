@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>SignalR Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+</head>
+<body>
+  <h3>SignalR Test</h3>
+  <pre id="log"></pre>
+
+  <script>
+    const log = (m) => document.getElementById("log").textContent += m + "\n";
+
+    const GATEWAY = "http://localhost:5214/hubs/chat"; 
+
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(GATEWAY)
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on("outbox.test", (payload) => {
+      log(" outbox.test => " + payload);
+    });
+
+    connection.on("chat.message.created", (payload) => {
+      log(" chat.message.created => " + payload);
+    });
+
+    async function start() {
+      await connection.start();
+      log("Connected to SignalR.");
+
+      await connection.invoke("JoinChannel", "t1", "c1");
+      log("Joined group: t1:c1");
+    }
+
+    start().catch(err => log("ERROR: " + err));
+  </script>
+</body>
+</html>
